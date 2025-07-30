@@ -53,7 +53,7 @@ const FloatingChat = () => {
         if (!res.ok) throw new Error('Local backend not available');
       } catch (err) {
         // Fallback to remote backend if local fails
-        res = await fetch('https://zany-pancake-6r497gjgxprc4xrx-8000.app.github.dev/ask', {
+        res = await fetch('https://organic-space-fiesta-j4qjw5xj5593x9-8000.app.github.dev/ask', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ query: userMessage.text })
