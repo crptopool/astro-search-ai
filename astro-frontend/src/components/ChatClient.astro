@@ -1,0 +1,52 @@
+---
+import { useState } from 'react';
+---
+
+<div class="chat-container">
+  <form on:submit={(e) => {
+    e.preventDefault();
+    const input = e.target.querySelector("input");
+    const question = input.value;
+    input.value = "";
+    handleAsk(question);
+  }}>
+    <input type="text" placeholder="Ask a question..." required />
+    <button type="submit">Ask</button>
+  </form>
+
+  <div id="chat-box">
+    {messages.map((msg) => (
+      <div class={msg.role}>{msg.text}</div>
+    ))}
+  </div>
+</div>
+
+<script type="module">
+  import { onMount } from "astro/jsx-runtime";
+  const messages = [];
+
+  const handleAsk = async (question) => {
+    messages.push({ role: "user", text: question });
+    const res = await fetch("http://localhost:8000/ask", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ query: question })
+    });
+    const data = await res.json();
+    messages.push({ role: "bot", text: data.answer });
+    document.querySelector("#chat-box").innerHTML = messages.map(
+      (msg) => `<div class="${msg.role}">${msg.text}</div>`
+    ).join("");
+  };
+</script>
+
+<style>
+  .chat-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1rem;
+    border: 1px solid #ccc;
+  }
+  .user { color: #0366d6; margin: 0.5rem 0; }
+  .bot { color: #24292e; margin: 0.5rem 0; }
+</style>

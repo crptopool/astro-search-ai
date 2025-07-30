@@ -1,0 +1,19 @@
+# Core dependencies
+streamlit>=1.25.0
+haystack-ai>=2.11.0
+qdrant-haystack>=1.0.0
+qdrant-client>=1.6.0
+torch>=2.0.0
+transformers==4.50.0
+sentence-transformers>=2.2.2
+
+# For API
+fastapi>=0.100.0
+uvicorn>=0.22.0
+pydantic>=2.0.0
+ 
+python-dotenv
+
+python-frontmatter==1.1.0
+# Dependency conflict resolution
+packaging==24.0

@@ -1,0 +1,6 @@
+Collecting python-frontmatter
+  Downloading python_frontmatter-1.1.0-py3-none-any.whl.metadata (4.1 kB)
+Requirement already satisfied: PyYAML in d:\pythonportable\python-3.12.8\lib\site-packages (6.0.2)
+Downloading python_frontmatter-1.1.0-py3-none-any.whl (9.8 kB)
+Installing collected packages: python-frontmatter
+Successfully installed python-frontmatter-1.1.0

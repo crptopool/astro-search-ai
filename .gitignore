@@ -1,0 +1,25 @@
+# Python virtual environments
+venv/
+.venv/
+ENV/
+
+# Node modules
+node_modules/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Editor folders
+.vscode/
+.idea/
+
+# OS generated files
+*.swp
+
+# Ignore database and uploads
+*.db
+uploads/

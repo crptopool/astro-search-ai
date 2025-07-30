@@ -1,0 +1,73 @@
+---
+// No server-side props
+---
+
+<dialog id="starlight__search" class="sl-dialog" aria-label="Search" inert>
+  <form method="dialog">
+    <button class="sl-icon-btn sl-close-btn" type="submit" title="Close search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </button>
+  </form>
+
+  <div class="custom-flexsearch">
+    <input type="text" id="flexsearch-input" placeholder="Search the Quran..." />
+    <ul id="flexsearch-results"></ul>
+  </div>
+
+  <script type="module">
+    let index;
+
+    async function loadFlexSearch() {
+      const { Index } = await import('https://cdn.jsdelivr.net/npm/flexsearch@0.7.31/dist/module/flexsearch.mjs');
+      const data = await fetch('/flexsearch-index.json').then(res => res.json());
+
+      index = new Index({ tokenize: 'forward', preset: 'match' });
+      data.entries.forEach((entry, i) => {
+        index.add(i, entry.text);
+      });
+
+      const input = document.getElementById("flexsearch-input");
+      const resultsEl = document.getElementById("flexsearch-results");
+
+      input.addEventListener("input", async () => {
+        const query = input.value.trim();
+        if (!query) return resultsEl.innerHTML = "";
+
+        const results = await index.search(query, 10);
+        resultsEl.innerHTML = results.map(i =>
+          `<li><a href="${data.entries[i].url}">${data.entries[i].text}</a></li>`
+        ).join("");
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", loadFlexSearch);
+  </script>
+
+  <style>
+    .custom-flexsearch {
+      padding: 1rem;
+    }
+    #flexsearch-input {
+      width: 100%;
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    #flexsearch-results {
+      margin-top: 1rem;
+      list-style: none;
+      padding-left: 0;
+    }
+    #flexsearch-results li {
+      margin: 0.5rem 0;
+    }
+    #flexsearch-results a {
+      color: var(--sl-color-text);
+      text-decoration: none;
+    }
+    #flexsearch-results a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</dialog>
