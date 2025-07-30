@@ -52,8 +52,8 @@ const FloatingChat = () => {
         });
         if (!res.ok) throw new Error('Local backend not available');
       } catch (err) {
-        // Fallback to remote backend if local fails
-        res = await fetch('https://organic-space-fiesta-j4qjw5xj5593x9-8000.app.github.dev/ask', {
+        // Fallback to API_URL from env if local fails
+        res = await fetch(import.meta.env.VITE_API_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ query: userMessage.text })

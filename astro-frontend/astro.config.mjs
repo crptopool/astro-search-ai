@@ -3,6 +3,9 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@astrojs/react';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 // import surahSidebar from './src/config/sidebar-surahs.js';
 
@@ -46,5 +49,11 @@ export default defineConfig({
 	],
 	vite: {
 		plugins: [tailwindcss()],
+		preview: {
+			allowedHosts: 'all',
+		},
+		define: {
+			'process.env.VITE_API_URL': JSON.stringify(process.env.VITE_API_URL),
+		},
 	},
 });
