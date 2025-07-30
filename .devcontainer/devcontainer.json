@@ -1,0 +1,19 @@
+{
+    "name": "Astro Search AI Dev Container",
+    "dockerComposeFile": [
+      "../docker-compose.yml"
+    ],
+    "service": "fastapi-backend-rag",
+    "workspaceFolder": "/workspaces/astro-search-ai",
+    "forwardPorts": [8000, 8501, 3000],
+    "postCreateCommand": "pip install -r fastapi-backend-rag/requirements.txt && cd astro-frontend && pnpm install",
+    "settings": {
+      "terminal.integrated.defaultProfile.linux": "bash"
+    },
+    "extensions": [
+      "ms-python.python",
+      "ms-azuretools.vscode-docker",
+      "esbenp.prettier-vscode",
+      "astro-build.astro-vscode"
+    ]
+  }
