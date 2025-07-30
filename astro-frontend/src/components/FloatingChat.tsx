@@ -42,12 +42,23 @@ const FloatingChat = () => {
     setLoading(true);
 
     try {
-      const res = await fetch('http://localhost:8000/ask', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: userMessage.text })
-      });
-
+      let res;
+      try {
+        // Try local backend first
+        res = await fetch('http://localhost:8000/ask', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query: userMessage.text })
+        });
+        if (!res.ok) throw new Error('Local backend not available');
+      } catch (err) {
+        // Fallback to remote backend if local fails
+        res = await fetch('https://zany-pancake-6r497gjgxprc4xrx-8000.app.github.dev/ask', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query: userMessage.text })
+        });
+      }
       const data = await res.json();
       // Compose bot message: summary + supporting verses (if any)
       let botText = data.answer || 'No answer returned.';
