@@ -7,7 +7,7 @@ services:
     container_name: fastapi-backend-rag
     command: uvicorn main:app --host 0.0.0.0 --port 8000
     ports:
-      - "8000:8000"
+      - "8020:8000"
     env_file:
       - ./fastapi-backend-rag/.env
     volumes:
@@ -21,7 +21,7 @@ services:
     container_name: streamlit-loader
     command: streamlit run streamlit_uploader.py --server.port 8501 --server.address 0.0.0.0
     ports:
-      - "8501:8501"
+      - "8521:8501"
     env_file:
       - ./fastapi-backend-rag/.env
     volumes:
@@ -33,10 +33,10 @@ services:
     build:
       context: ./astro-frontend
       args:
-        VITE_API_URL: http://astro.look4experts.com/ask
+        VITE_API_URL: "http://astro.look4experts.com/ask"
     container_name: astro-frontend
     ports:
-      - "3000:3000"
+      - "3020:80"
     environment:
       - NODE_ENV=production
     depends_on: []

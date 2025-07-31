@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: qdrant-dev
+    ports:
+      - "6333:6333"   # REST API
+      - "6334:6334"   # gRPC
+    volumes:
+      - qdrant_data:/qdrant/storage
+    environment:
+#     QDRANT__SERVICE__API_KEY: dev-api-key  # optional: for secured access
+      QDRANT__SERVICE__API_KEY: sk_dev_51da9fe5f4b248cabf1178d38f6f8498
+volumes:
+  qdrant_data:
+
