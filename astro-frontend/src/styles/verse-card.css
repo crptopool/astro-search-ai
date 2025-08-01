@@ -7,12 +7,13 @@
   }
   
   .left-column {
-    width: 40px;
+    width: 60px;
     display: flex;
     flex-direction: column;
     justify-content: stretch;
     align-items: stretch;
-    background-color: #e0f0f8;
+    background-color: #fffff8;
+    font-size: 24px;
   }
   
   .left-box {
@@ -24,11 +25,57 @@
     font-size: 12px;
     height: 100%;
     padding: 4px;
+    margin: 4px;
     box-sizing: border-box;
   }
-  
+
+.square-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e5e5e5; /* or use background-image if it's an icon */
+  border-radius: 4px;        /* optional: for rounded corners */
+  font-size: 14px;           /* adjust as needed */
+  font-weight: bold;         /* optional */
+  color: #333;               /* text color */
+}
+
+.play-icon {
+  width: 32px;
+  height: 32px;
+  background-image: url("data:image/svg+xml,%3Csvg aria-hidden='true' data-prefix='fal' data-icon='play' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath fill='currentColor' d='M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6zm-16.2 55.1l-352 208C45.6 483.9 32 476.6 32 464V47.9c0-16.3 16.4-18.4 24.1-13.8l352 208.1c10.5 6.2 10.5 21.4.1 27.6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  display: inline-block;
+}
+
+.share-icon {
+  width: 32px;
+  height: 32px;
+  background-image: url("data:image/svg+xml,%3Csvg aria-hidden='true' data-prefix='fal' data-icon='share-all' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 576 512'%3E%3Cpath fill='currentColor' d='M470.632 201.371L310.63 41.4C290.59 21.36 256 35.44 256 64.03v72.69C140.5 140.56 0 164.89 0 317.79c0 64.98 33.54 118.26 85.11 155.97 24.19 17.7 58.04-4.92 49.69-34.51-27.7-98.19-.38-122.06 121.2-126.42v71.15c0 28.61 34.61 42.64 54.63 22.63l160.002-159.98c12.491-12.499 12.491-32.759 0-45.259zM288 384.001v-103.9c-145.671 1.326-224.979 22.633-184 167.9-31.51-23.05-72-65.11-72-130.21 0-131.425 125.835-148.345 256-149.69v-104.1l160 160-160 160zm278.628-137.373l-160 159.978c-13.454 13.454-33.492 11.509-45.191.106L544 224.001 361.438 41.294c11.695-11.401 31.723-13.362 45.189.105l160 159.974c12.497 12.497 12.497 32.758.001 45.255z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  display: inline-block;
+}
+
+.star-icon {
+  width: 32px;
+  height: 32px;
+  background-image: url("data:image/svg+xml,%3Csvg aria-hidden='true' data-prefix='fal' data-icon='star' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 576 512'%3E%3Cpath fill='currentColor' d='M528.1 171.5L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6zM405.8 317.9l27.8 162L288 403.5 142.5 480l27.8-162L52.5 203.1l162.7-23.6L288 32l72.8 147.5 162.7 23.6-117.7 114.8z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  display: inline-block;
+}
+
+
   .left-box:last-child {
     border-bottom: none;
+
   }
   
   .right-column {
@@ -44,7 +91,7 @@
   }
   
   .quran-verses {
-    background-color: #fef8f8;
+    background-color: #fffff8;
     direction: rtl;
     text-align: right;
     font-family: 'Scheherazade New', serif;
