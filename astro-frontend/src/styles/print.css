@@ -1,0 +1,61 @@
+@page {
+    size: A4;
+    margin: 20 20 20 20;
+
+    /* Other possible values: */
+    size: letter; /* US letter */
+    size: 6.125in 9.25in; /* width height */
+  
+    margin: 1cm 1cm; /* use centimeters or inches depending on your needs */
+}
+@page:right{
+    @bottom-right {
+      content: counter(page);
+    }
+  }
+  
+  @page:left{
+    @bottom-left {
+      content: "Page " counter(page) " of " counter(pages);
+    }
+  }
+/*   
+@media print {
+
+    header { 
+        position: fixed; 
+        top: 0; 
+        left: 0; 
+        right: 0; 
+        height: 50px; 
+    } 
+
+    footer { 
+        position: fixed; 
+        bottom: 0; 
+        left: 0; 
+        right: 0; 
+        height: 50px; 
+    } 
+
+    .nav-wrapper {
+        display: none;  
+
+    }
+
+    .noprint {
+        visibility: hidden;
+     }
+     section p {
+        page-break-inside:avoid;
+     }
+     starlight-aside starlight-aside--hadith {
+        display: table;
+        page-break-inside:avoid;
+        break-inside: avoid;
+        page-break-before: auto;
+        page-break-after: auto; 
+     }
+}
+
+*/

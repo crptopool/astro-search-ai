@@ -1,0 +1,67 @@
+---
+// Fix the import path for PAGE_TITLE_ID constant
+const PAGE_TITLE_ID = '_top';
+import HorizontalRule from './ui/HorizontalRule.astro';
+---
+
+<div class="page-title-container not-content">
+  <h1 id={PAGE_TITLE_ID} class="centered-title">{Astro.locals.starlightRoute.entry.data.title}</h1>
+  <div class="hr-container">
+    <HorizontalRule variant="hr10" width="800px" class="centered-hr" />
+  </div>
+</div>
+
+<style>
+  @layer starlight.core {
+    /* Add "not-content" class to disable Starlight's default content styling */
+    .page-title-container {
+      margin-bottom: 1.5rem;
+      position: relative; /* For positioning context */
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* Center children horizontally */
+    }
+    
+    .centered-title {
+      margin-top: 1rem;
+      font-size: var(--sl-text-h1);
+      line-height: var(--sl-line-height-headings);
+      font-weight: 600;
+      color: var(--sl-color-white);
+      margin-bottom: 0.5rem;
+      border-bottom: none !important;
+      text-align: center; /* Ensure text alignment is centered */
+      width: 100%;
+    }
+
+    .hr-container {
+      width: 100%;
+      display: flex;
+      justify-content: center; /* Center the horizontal rule */
+      margin-top: 0.5rem;
+    }
+
+    /* More aggressive rule to prevent any styling after headings */
+    h1::after {
+      display: none !important;
+      content: none !important;
+    }
+  }
+
+  /* Override the ContentPanel border that's causing the duplicate horizontal line */
+  :global(.content-panel + .content-panel) {
+    border-top: none !important;
+  }
+</style>
+
+<!-- Add a script to ensure the border is removed even if loaded dynamically -->
+<script>
+  // Ensure the ContentPanel border is removed
+  document.addEventListener('DOMContentLoaded', () => {
+    const contentPanels = document.querySelectorAll('.content-panel + .content-panel');
+    contentPanels.forEach(panel => {
+      panel.style.borderTop = 'none';
+    });
+  });
+</script>

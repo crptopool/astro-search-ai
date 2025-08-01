@@ -1,17 +1,173 @@
-@layer base, starlight, theme, components, utilities;
+/* Import fonts */
+@import '@fontsource/scheherazade-new/index.css';
+@import '@fontsource/amiri/index.css';
+/* Additional fonts - uncomment if needed
+@import '@fontsource-variable/noto-naskh-arabic/index.css';
+@import '@fontsource/reem-kufi-ink/index.css';
+@import '@fontsource-variable/noto-nastaliq-urdu/index.css';
+@import '@fontsource/amiri-quran/index.css';
+@import '@fontsource/lateef/index.css';
+@import '@fontsource/katibeh/index.css';
+@import '@fontsource/mirza/index.css';
+*/
 
-@import '@astrojs/starlight-tailwind';
-@import 'tailwindcss/theme.css' layer(theme);
-@import 'tailwindcss/utilities.css' layer(utilities);
-
-@theme {
-	/*
-	Configure your Tailwind theme that will be used by Starlight.
-	https://starlight.astro.build/guides/css-and-tailwind/#styling-starlight-with-tailwind
-	*/
+/* src/styles/custom-theme.css */
+:root {
+	/* Dark mode - change hue value to your preferred color */
+	--sl-hue: 270; /* Purple example - change to your desired hue */
+	--sl-color-accent-low: hsl(var(--sl-hue), 54%, 20%);
+	--sl-color-accent: hsl(var(--sl-hue), 100%, 60%);
+	--sl-color-accent-high: hsl(var(--sl-hue), 100%, 85%);
+  }
+  
+  :root[data-theme='light'] {
+	/* Light mode - use same hue as dark mode for consistency */
+	--sl-color-accent-high: hsl(var(--sl-hue), 80%, 30%);
+	--sl-color-accent: hsl(var(--sl-hue), 90%, 60%);
+	--sl-color-accent-low: hsl(var(--sl-hue), 88%, 90%);
+  }
+ 
+*,
+*::after,
+*::before {
+	box-sizing: border-box;
+	margin: 0;
 }
 
-/*
-Add additional Tailwind styles to this file:
-https://tailwindcss.com/docs/adding-custom-styles#using-custom-css
-*/
+
+ 
+/* nah*/
+.hero {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 2rem;
+}
+
+.roles {
+	display: none;
+}
+
+.hero img {
+	aspect-ratio: 5 / 4;
+	object-fit: cover;
+	object-position: top;
+	border-radius: 1.5rem;
+	box-shadow: var(--shadow-md);
+}
+
+@media (min-width: 50em) {
+	.hero {
+		display: grid;
+		grid-template-columns: 6fr 4fr;
+		padding-inline: 2.5rem;
+		gap: 3.75rem;
+	}
+
+	.roles {
+		margin-top: 0.5rem;
+		display: flex;
+		gap: 0.5rem;
+	}
+
+	.hero img {
+		aspect-ratio: 3 / 4;
+		border-radius: 4.5rem;
+		object-fit: cover;
+	}
+}
+
+
+
+/* ====================================================== */
+
+.section {
+	display: grid;
+	gap: 2rem;
+}
+
+.with-background {
+	position: relative;
+}
+
+.with-background::before {
+	--hero-bg: var(--bg-image-subtle-2);
+
+	content: '';
+	position: absolute;
+	pointer-events: none;
+	left: 50%;
+	width: 100vw;
+	aspect-ratio: calc(2.25 / var(--bg-scale));
+	top: 0;
+	transform: translateY(-75%) translateX(-50%);
+	background:
+		url('/assets/backgrounds/noise.png') top center/220px repeat,
+		var(--hero-bg) center center / var(--bg-gradient-size) no-repeat,
+		var(--gray-999);
+	background-blend-mode: overlay, normal, normal, normal;
+	mix-blend-mode: var(--bg-blend-mode);
+	z-index: -1;
+}
+
+.with-background.bg-variant::before {
+	--hero-bg: var(--bg-image-subtle-1);
+}
+
+.section-header {
+	justify-self: center;
+	text-align: center;
+	max-width: 50ch;
+	font-size: var(--text-md);
+	color: var(--gray-300);
+}
+
+.section-header h3 {
+	font-size: var(--text-2xl);
+}
+.landing 
+	h1, .landing h2,.landing  h3,.landing  h4,.landing  h5 {
+    line-height: 1.1;
+    font-family: var(--font-brand);
+    font-weight: 600;
+    color: var(--gray-300);
+ 
+}
+
+@media (min-width: 50em) {
+	.section {
+		grid-template-columns: repeat(4, 1fr);
+		grid-template-areas: 'header header header header' 'gallery gallery gallery gallery';
+		gap: 5rem;
+	}
+
+	.section.with-cta {
+		grid-template-areas: 'header header header cta' 'gallery gallery gallery gallery';
+	}
+
+	.section-header {
+		grid-area: header;
+		font-size: var(--text-lg);
+	}
+
+	.section-header h3 {
+		font-size: var(--text-4xl);
+	}
+
+	.with-cta .section-header {
+		justify-self: flex-start;
+		text-align: left;
+		
+	}
+
+	.gallery {
+		grid-area: gallery;
+	}
+
+	.cta {
+		grid-area: cta;
+	}
+}
+
+/* ====================================================== */
+

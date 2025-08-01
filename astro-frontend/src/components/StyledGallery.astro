@@ -1,0 +1,50 @@
+---
+// StyledGallery.astro - A centered gallery component for the landing page
+---
+
+<div class="styled-gallery">
+  <slot />
+</div>
+
+<style>
+  /* Landing page specific styles that won't affect inner pages */
+  .styled-gallery {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+  }
+  
+  /* Target grid and cards */
+  .styled-gallery :global(.grid),
+  .styled-gallery :global(.card-grid) {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  /* Force center align for all content within cards */
+  .styled-gallery :global(.link-card),
+  .styled-gallery :global(.link-card a),
+  .styled-gallery :global(.link-card h3),
+  .styled-gallery :global(.link-card p),
+  .styled-gallery :global(.link-card .body),
+  .styled-gallery :global(.link-card .url) {
+    text-align: center !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Override any max-width constraints */
+  .styled-gallery :global(.grid),
+  .styled-gallery :global(.card-grid) {
+    max-width: 1200px;
+  }
+</style>

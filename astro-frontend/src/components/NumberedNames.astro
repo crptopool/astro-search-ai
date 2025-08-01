@@ -1,0 +1,69 @@
+---
+import '../styles/numbered-boxes.css';
+
+// API endpoint
+const apiUrl = `https://nocodb.admads.com/api/v2/tables/mhazmtjgszqlppq/records?viewId=vwcpbu0s9i17x9kx&limit=100&offset=0`;
+
+// API request configuration
+const options = {
+  method: 'GET',
+  headers: {
+    'xc-auth': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImluZm9AYWx0YWlyLmdlIiwiaWQiOiJ1c2puN3A2d2pnajh3bnc3Iiwicm9sZXMiOnsib3JnLWxldmVsLWNyZWF0b3IiOnRydWUsInN1cGVyIjp0cnVlfSwidG9rZW5fdmVyc2lvbiI6IjQxOTAzMDI4NzgxZmY1NGFlYjUxMTVhNmVhMTZhMjFlYTUxMGNjYjM5MmJjODNkYzkwMzQ5YWYyZWI2ZDAxYWZjZTU0Y2FlNTQzMmFjY2NiIiwiaWF0IjoxNzUwNTIyMTQ2LCJleHAiOjE3ODY1MjIxNDZ9.q3V5fNWQEg8cQnUjwrJexnTFPguBmXJ5E8fXJrMTaPk'
+  }
+};
+
+// Data fetching with error handling
+let data = null;
+let errorMessage = '';
+let isLoading = true;
+
+try {
+  const response = await fetch(apiUrl, options);
+  if (response.ok) {
+    data = await response.json();
+    isLoading = false;
+    
+    // Check if the data has the expected structure
+    if (!data || !data.list || data.list.length === 0) {
+      errorMessage = "No data found for the 99 Names of Allah";
+      console.warn(errorMessage);
+    }
+  } else {
+    errorMessage = `API Error: ${response.status} - ${response.statusText}`;
+    console.error(errorMessage);
+  }
+} catch (error) {
+  errorMessage = `Failed to fetch data: ${error.message || 'Unknown error'}`;
+  console.error(errorMessage);
+}
+---
+
+{isLoading && (
+  <div class="loading-container">
+    <p style="text-align:center; padding: 1rem;">Loading the 99 Names of Allah...</p>
+  </div>
+)}
+
+{errorMessage && (
+  <div class="error-container">
+    <p style="color: #e74c3c; text-align: center; padding: 1rem;">
+      <span style="font-weight: bold;">⚠️ {errorMessage}</span><br/>
+      <small>Please check your network connection or try again later.</small>
+    </p>
+  </div>
+)}
+
+{data && data.list && data.list.length > 0 && (
+  <div class="numbered-box-container">
+    {data.list.map((item) => (
+      <div class="numbered-box">
+        <div class="numbered-box-number">{item.serial_num}</div>
+        <div class="numbered-box-content">
+          <div class="arabic-name">{item.name_arabic}</div>
+          <div class="english-name">{item.name_translation_en}</div>
+          <div class="meaning">{item.name_meaning_en}</div>
+        </div>
+      </div>
+    ))}
+  </div>
+)}

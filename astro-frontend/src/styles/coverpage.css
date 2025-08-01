@@ -1,0 +1,27 @@
+
+.cover {
+  page: cover;
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  background-image: url('/assets/default-og-image.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.cover h1 {
+  margin: 1in;
+  color: #333;
+  text-align: left;
+  font-weight: 300;
+  font-size: 3.4rem;
+}
+
+@page cover {
+  margin: 0; /* Use a full size page */
+
+  /* Remove page numbers for the cover */
+  @bottom-center {
+    content: none;
+  }
+}

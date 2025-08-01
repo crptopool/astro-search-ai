@@ -1,0 +1,72 @@
+.numbered-box-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.numbered-box {
+  width: calc(50% - 0.75rem);
+  margin-bottom: 1.5rem;
+  position: relative;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.numbered-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.numbered-box-number {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #15C1C1;
+  color: white;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  border-radius: 0 0 0.5rem 0;
+}
+
+.numbered-box-content {
+  padding: 2rem 1rem 1rem;
+  background-color: #edfcff;
+}
+
+.arabic-name {
+  text-align: right;
+  direction: rtl;
+  unicode-bidi: embed;
+  font-family: 'Scheherazade New', serif;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #0A5C5C;
+}
+
+.english-name {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.meaning {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .numbered-box {
+    width: 100%;
+  }
+}

@@ -1,0 +1,63 @@
+/* Splash page centering styles */
+
+/* Target the main article in splash template */
+article.splash {
+  text-align: center;
+}
+
+/* Target the main splash content */
+article.splash .content {
+  max-width: 90ch;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+/* Center cards in splash template */
+article.splash .grid,
+article.splash .card-grid {
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+}
+
+/* Ensure all headers in splash are centered */
+article.splash h1,
+article.splash h2,
+article.splash h3,
+article.splash h4,
+article.splash h5,
+article.splash h6 {
+  text-align: center !important;
+}
+
+/* Center all paragraphs in splash */
+article.splash p {
+  text-align: center;
+}
+
+/* Target the specific gallery div in splash page */
+.splash .gallery {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Target all links/buttons in splash */
+.splash .hero-actions {
+  display: flex;
+  justify-content: center;
+}
+
+/* Fix any flex layouts in splash */
+.splash [class*="flex"],
+.splash [class*="grid"] {
+  justify-content: center;
+}
+
+/* Target splash template via data attribute as a fallback */
+[data-pagefind-body] article[class*="splash"] .content > * {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}

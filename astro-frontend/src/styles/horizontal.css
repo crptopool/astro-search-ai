@@ -1,0 +1,5 @@
+hr {
+	height: 4rem;
+	border: 0;
+ 	border-bottom: 4px solid var(--theme-divider);
+}

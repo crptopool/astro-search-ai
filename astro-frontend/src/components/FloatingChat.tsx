@@ -50,15 +50,30 @@ const FloatingChat = () => {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ query: userMessage.text })
         });
-        if (!res.ok) throw new Error('Local backend not available');
+      
+        if (!res.ok) {
+          throw new Error(`Local backend error: ${res.status} ${res.statusText}`);
+        }
       } catch (err) {
-        // Fallback to API_URL from env if local fails
-        res = await fetch(import.meta.env.VITE_API_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ query: userMessage.text })
-        });
+        console.warn("Local backend not available, falling back to VITE_API_URL:", err.message);
+      
+        try {
+          // Fallback to API_URL from .env
+          res = await fetch(import.meta.env.VITE_API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query: userMessage.text })
+          });
+      
+          if (!res.ok) {
+            throw new Error(`Fallback backend error: ${res.status} ${res.statusText}`);
+          }
+        } catch (fallbackErr) {
+          console.error("Both backends failed:", fallbackErr.message);
+          throw fallbackErr; // optional: or handle gracefully
+        }
       }
+      
       const data = await res.json();
       // Compose bot message: summary + supporting verses (if any)
       let botText = data.answer || 'No answer returned.';

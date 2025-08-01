@@ -1,0 +1,16 @@
+---
+interface Props {
+  size?: string;
+}
+
+const { size = "0.5rem" } = Astro.props;
+---
+
+<div class="custom-spacer" style={`height: ${size};`}></div>
+
+<style>
+  .custom-spacer {
+    display: block;
+    width: 100%;
+  }
+</style>

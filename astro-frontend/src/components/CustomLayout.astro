@@ -1,0 +1,11 @@
+---
+import { DefaultLayout } from '@astrojs/starlight/components';
+import ChatBotWrapper from './ChatBotWrapper.astro';
+
+const { ...props } = Astro.props;
+---
+
+<DefaultLayout {...props}>
+  <slot />
+  <ChatBotWrapper />
+</DefaultLayout>

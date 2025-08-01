@@ -1,0 +1,66 @@
+---
+import '~/styles/asides.css';
+import '~/styles/global.css';
+import '~/styles/horizontal.css';
+
+import { fetchNocoData } from '~/util/fetchNocoData.js';
+import Aside from '~/components/Aside.astro';
+
+const {
+  category = "",
+  sub_categories = "",
+  showTitle = false,
+  showSummary = false,
+  showNumbers = false, // Added new prop to control visibility of numbers
+  itemLimit = 15,
+  includeDivider = false
+} = Astro.props;
+
+const dataList = await fetchNocoData({
+  category,
+  sub_categories,
+  limit: itemLimit,
+  shuffle: 0,
+  offset: 0
+});
+---
+
+
+ 
+<div>
+  {dataList.map((item, index) => (
+    <div key={index}>
+      {showTitle && (
+        <h2>{item.title_en || `Item ${index + 1}`}</h2>
+      )}
+
+      <Aside type={category === "quran" ? "quran" : "hadith"} title={showNumbers ? `(${index + 1})` : ""}>
+        <div class="starlight-aside__content">
+          <p>{item.dua_arabic || 'No Arabic text available'}</p>
+        </div>
+      </Aside>
+       
+      <Aside type="reference" title={showNumbers ? `(${index + 1})` : ""}>
+        <div class="starlight-aside__content">
+          <p>{item.dua_transliteration || 'No transliteration available'}</p>
+          <p>{item.dua_english || 'No English translation available'}</p>
+          <p><i>{item.dua_reference || 'No reference available'}</i></p>
+        </div>
+      </Aside>
+
+      {includeDivider && (
+        <svg height="50" width="600" xmlns="http://www.w3.org/2000/svg">
+          <line x1="30" y1="30" x2="600" y2="30" style="stroke:rgba(163,95,236,0.3);stroke-width:2" />
+        </svg>
+      )}
+
+     
+    </div>
+  ))}
+</div>
+{showSummary && dataList[0] && (
+  <Aside type="reference" title={dataList[0].title_en} ><div> 
+      {dataList[0].dua_description_en}
+     
+  </div></Aside>
+)}

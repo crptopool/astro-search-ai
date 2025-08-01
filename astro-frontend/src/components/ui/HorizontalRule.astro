@@ -1,0 +1,45 @@
+---
+interface Props {
+  /**
+   * The SVG file to use as the horizontal rule
+   * @default "hr2"
+   */
+  variant?: "hr1" | "hr2" | "hr3" | "hr4" | "hr5" | "hr6" | "hr7" | "hr8" | "hr9" | "hr10" | "hr11";
+  
+  /**
+   * Width of the horizontal rule
+   * @default "350px"
+   */
+  width?: string;
+  
+  /**
+   * Additional CSS class names
+   */
+  class?: string;
+}
+
+const { 
+  variant = "hr2", 
+  width = "350px", 
+  class: className = "" 
+} = Astro.props;
+
+const svgPath = `/assets/svg-files/${variant}.svg`;
+---
+
+<div class:list={["decorative-hr", className]}>
+  <img src={svgPath} alt="Decorative horizontal rule" />
+</div>
+
+<style define:vars={{ width }}>
+  .decorative-hr {
+    text-align: center;
+    margin: 1rem 0;
+  }
+
+  .decorative-hr img {
+    max-width: 100%;
+    height: auto;
+    width: var(--width);
+  }
+</style>

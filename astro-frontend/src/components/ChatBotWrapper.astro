@@ -1,0 +1,32 @@
+---
+// ChatBotWrapper.astro - Astro wrapper for React ChatBot component
+import ChatBot from './ChatBot';
+---
+
+<ChatBot client:only="react" />
+
+<style>
+  /* Define CSS variables that will be used by the ChatBot component */
+  :root {
+    --bg-primary: var(--sl-color-accent);
+    --primary-dark: var(--sl-color-accent-high);
+    --text-primary: white;
+  }
+
+  /* Ensure the chat component inherits Starlight's theme colors */
+  :global(.bg-primary) {
+    background-color: var(--sl-color-accent) !important;
+  }
+
+  :global(.text-white) {
+    color: white !important;
+  }
+
+  :global(.hover\:bg-primary-dark:hover) {
+    background-color: var(--sl-color-accent-high) !important;
+  }
+
+  :global(.focus\:ring-primary:focus) {
+    --tw-ring-color: var(--sl-color-accent) !important;
+  }
+</style>

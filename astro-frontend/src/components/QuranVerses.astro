@@ -1,0 +1,236 @@
+---
+import '../styles/asides.css';
+
+// Unified prop handling with better defaults and destructuring
+const {
+  type = "single", // "single", "range", or "rangeJoined"
+  chapter_id = 1,
+  verse_id = 1,      // used for single verse
+  verse_id_start = 1, // used for range and rangeJoined
+  verse_id_end = 1,   // used for range and rangeJoined
+  showTranslation = true,
+  compact = false     // New prop to control spacing between verses
+} = Astro.props;
+
+// Convert showTranslation to proper boolean value if it's a string
+const shouldShowTranslation = showTranslation === 'false' ? false : Boolean(showTranslation);
+
+// Build query parameters based on the component type
+const buildQueryParam = () => {
+  if (type === "single") {
+    return `%28chapter_id%2Ceq%2C${chapter_id}%29~and%28verse_id%2Ceq%2C${verse_id}%29&limit=1&shuffle=0&offset=0`;
+  } else {
+    // For both range and rangeJoined
+    return `%28chapter_id%2Ceq%2C${chapter_id}%29~and%28verse_id%2Cgte%2C${verse_id_start}%29~and%28verse_id%2Clte%2C${verse_id_end}%29&limit=20&shuffle=0&offset=0`;
+  }
+};
+
+const query_param = buildQueryParam();
+const apiUrl = `https://nocodb.admads.com/api/v2/tables/mcd7emvlv8sfcjn/records?viewId=vwkil70izkhvcain&where=${query_param}`;
+
+// API request configuration
+const options = {
+  method: 'GET',
+  headers: {
+    'xc-auth': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImluZm9AYWx0YWlyLmdlIiwiaWQiOiJ1c2puN3A2d2pnajh3bnc3Iiwicm9sZXMiOnsib3JnLWxldmVsLWNyZWF0b3IiOnRydWUsInN1cGVyIjp0cnVlfSwidG9rZW5fdmVyc2lvbiI6IjQxOTAzMDI4NzgxZmY1NGFlYjUxMTVhNmVhMTZhMjFlYTUxMGNjYjM5MmJjODNkYzkwMzQ5YWYyZWI2ZDAxYWZjZTU0Y2FlNTQzMmFjY2NiIiwiaWF0IjoxNzUwNTIyMTQ2LCJleHAiOjE3ODY1MjIxNDZ9.q3V5fNWQEg8cQnUjwrJexnTFPguBmXJ5E8fXJrMTaPk'
+  }
+};
+
+// Data fetching with improved error handling
+let data = null;
+let errorMessage = '';
+let isLoading = true;
+
+try {
+  const response = await fetch(apiUrl, options);
+  if (response.ok) {
+    data = await response.json();
+    isLoading = false;
+    
+    // Check if the data has the expected structure and content
+    if (!data || !data.list || data.list.length === 0) {
+      if (type === "single") {
+        errorMessage = `No verse found for Surah ${chapter_id}:${verse_id}`;
+      } else {
+        errorMessage = `No verses found for Surah ${chapter_id} (${verse_id_start}-${verse_id_end})`;
+      }
+      console.warn(errorMessage);
+    }
+  } else {
+    errorMessage = `API Error: ${response.status} - ${response.statusText}`;
+    console.error(errorMessage);
+  }
+} catch (error) {
+  errorMessage = `Failed to fetch Quran data: ${error.message || 'Unknown error'}`;
+  console.error(errorMessage);
+}
+
+// Title for the aside component based on type
+const quranTitle = type === "single" 
+  ? `Quran ${chapter_id}:${verse_id}` 
+  : `Quran ${chapter_id}:${verse_id_start}-${verse_id_end}`;
+---
+
+<div class={`quran-verses-container ${compact ? "compact" : ""}`}>
+  {isLoading && (
+    <div class="loading-container">
+      <p>Loading {type === "single" ? "verse" : "verses"}...</p>
+    </div>
+  )}
+  
+  {errorMessage && (
+    <div class="error-container">
+      <p>
+        <span class="error-title">⚠️ {errorMessage}</span><br/>
+        <small>Please check your network connection or try again later.</small>
+      </p>
+    </div>
+  )}
+  
+  {/* Single verse rendering */}
+  {type === "single" && data && data.list && data.list.length > 0 && (
+    <div class="verse-section">
+      <p class="verse-header">
+        Quran {data.list[0].chapter_id}: {data.list[0].verse_id}
+        <span class="chapter-arabic">
+          {data.list[0].chapter_name_arabic}
+        </span>
+      </p>
+      <div class="starlight-aside starlight-aside--quran">
+        <p>{data.list[0].ayah_arabic}</p>
+      </div>
+      {shouldShowTranslation && (
+        <p class="verse-translation">{data.list[0].ayah_translation_en_saheeh_int}</p>
+      )}
+    </div>
+  )}
+  
+  {/* Range verse rendering */}
+  {type === "range" && data && data.list && data.list.length > 0 && (
+    <div class="verses-section"> 
+      <p class="verse-header">
+        Quran {chapter_id}:{verse_id_start}-{verse_id_end}
+        <span class="chapter-arabic">
+          {data.list.length > 0 ? data.list[0].chapter_name_arabic : ''}
+        </span>
+      </p>
+      {data.list.map((item) => (
+        <div class="verse-item">
+          <div class="starlight-aside starlight-aside--quran">
+            <p>{item.ayah_arabic} ﴿{item.verse_id}﴾</p>
+          </div>
+          {shouldShowTranslation && (
+            <p class="verse-translation">{item.ayah_translation_en_saheeh_int}</p>
+          )}
+        </div>
+      ))}
+    </div>
+  )}
+  
+  {/* Range joined rendering */}
+  {type === "rangeJoined" && data && data.list && data.list.length > 0 && (
+    <div class="verses-section">
+      {data.list.map((item) => (
+        <div class="verse-item">
+          <p class="verse-header">
+            Quran {item.chapter_id}: {item.verse_id}
+            <span class="chapter-arabic">
+              {item.chapter_name_arabic}
+            </span>
+          </p>
+          <div class="starlight-aside starlight-aside--quran">
+            <p>{item.ayah_arabic}</p>
+          </div>
+          {shouldShowTranslation && (
+            <p class="verse-translation">{item.ayah_translation_en_saheeh_int}</p>
+          )}
+        </div>
+      ))}
+    </div>
+  )}
+</div>
+
+<style>
+  /* Container styles */
+  .quran-verses-container {
+    margin-bottom: 1rem;
+  }
+  
+  /* Loading and error states */
+  .loading-container {
+    padding: 1rem;
+    text-align: center;
+  }
+  .error-container {
+    padding: 1rem;
+    text-align: center;
+    color: #e74c3c;
+  }
+  .error-title {
+    font-weight: bold;
+  }
+  
+  /* Verse elements */
+  .verse-section, .verses-section {
+    margin-bottom: 0.5rem;
+  }
+  .verse-item {
+    margin-bottom: 1rem;
+  }
+  .verse-header {
+    text-align: left;
+    font-size: 18px;
+    padding: 0 10px 0 10px;
+    font-weight: normal;
+    background-color: #ffb9b9;
+    margin-bottom: 0.5rem;
+    margin-top: 1rem; /* Add margin above the header */
+  }
+  
+  /* Add a special case for the first header in each section */
+  .verse-section > .verse-header:first-child,
+  .verses-section > .verse-header:first-child {
+    margin-top: 0.5rem; /* Smaller top margin for the first header */
+  }
+
+  .chapter-arabic {
+    float: right;
+  }
+  .verse-translation {
+    direction: ltr;
+    text-align: left;
+    font-size: 16px;
+    font-family: inherit;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+  }
+  
+  /* Compact mode - eliminates almost all spacing */
+  .quran-verses-container.compact .verse-section,
+  .quran-verses-container.compact .verses-section {
+    margin-bottom: 0.25rem;
+  }
+  
+  .quran-verses-container.compact .verse-item {
+    margin-bottom: 0;
+  }
+  
+  .quran-verses-container.compact .verse-header {
+    margin-bottom: 0.525rem;
+    margin-top: 0.75rem; /* Less space in compact mode */
+  }
+  
+  .quran-verses-container.compact .verse-section > .verse-header:first-child,
+  .quran-verses-container.compact .verses-section > .verse-header:first-child {
+    margin-top: 0.25rem; /* Even smaller top margin for compact mode */
+  }
+
+  .quran-verses-container.compact .verse-translation {
+    margin-top: 0.125rem;
+  }
+  
+  /* Remove margin from last items */
+  .quran-verses-container .verse-item:last-child {
+    margin-bottom: 0;
+  }
+</style>

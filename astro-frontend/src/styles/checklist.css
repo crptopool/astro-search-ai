@@ -1,0 +1,67 @@
+.checklist ul li {
+  display: flex;
+  align-items: center;
+  padding-left: 0;
+  margin-bottom: 0.5rem;
+}
+
+.checklist ul li input[type="checkbox"] {
+  margin-right: 0.5rem;
+  position: relative;
+  transform: none;
+  display: flex;
+  align-items: center;
+}
+
+.checklist label {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Fix for the checkbox appearance to ensure square checkboxes are displayed and aligned */
+.checklist input[type="checkbox"]::after {
+  content: '';
+  display: inline-block;
+  width: 1.25em;
+  height: 1.25em;
+  border: 1px solid var(--sl-color-gray-5, #555);
+  border-radius: 0.25rem;
+  background-color: var(--sl-color-bg, white);
+  margin-right: 0.75rem;
+  vertical-align: middle;
+  position: static;
+  top: auto;
+  transform: none;
+}
+
+/* Override any absolute positioning that might be affecting alignment */
+check-list :global(input[type='checkbox']::after) {
+  position: static !important;
+  inset-inline-start: auto !important;
+  top: auto !important;
+  transform: none !important;
+}
+
+/* Style for checked state */
+.checklist input[type="checkbox"]:checked::after {
+  background-color: var(--sl-color-green-low, #e6f7ef);
+  border-color: var(--sl-color-green, #22c55e);
+}
+
+/* Add checkmark for checked state - adjusted for better alignment */
+.checklist input[type="checkbox"]:checked::before {
+  content: "✓";
+  position: absolute;
+  left: 0.4em;
+  top: 0.2em;
+  color: var(--sl-color-green, #22c55e);
+  font-size: 0.9em;
+  font-weight: bold;
+  z-index: 1;
+  line-height: 1;
+}
+
+.centered-pdf-viewer {
+  margin: 0 auto;
+  max-width: 100%;
+}

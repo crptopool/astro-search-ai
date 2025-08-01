@@ -27,6 +27,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:3000",
+        "http://localhost:4321",
         "http://127.0.0.1:3000",
         "https://organic-space-fiesta-j4qjw5xj5593x9-3000.app.github.dev"
     ],

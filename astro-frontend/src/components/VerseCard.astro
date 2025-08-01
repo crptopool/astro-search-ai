@@ -1,0 +1,26 @@
+---
+import '../styles/verse-card.css';
+ 
+// Props
+const {
+  verseNumber = 1,
+  arabicText = "ٱلْـحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ",
+  translation = "[All] praise is [due] to Allah, Lord of the worlds",
+  transliteration = "Alḥamdu lillāhi rabbi l-ʿālamīn"
+} = Astro.props;
+---
+  
+<div class="container">
+  <div class="left-column">
+    <div class="left-box">{verseNumber}</div>
+    <div class="left-box">▶</div>
+    <div class="left-box">⤴</div>
+    <div class="left-box">☆</div>
+  </div>
+
+  <div class="right-column">
+    <div class="right-box quran-verses" dir="rtl">{arabicText}</div>
+    <div class="right-box quran-translations">{translation}</div>
+    <div class="right-box quran-translations">{transliteration || '— Transliteration'}</div>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+---
+title: Table of Contents
+description: Table of Contents
+---
+
+import '~/styles/numbered-boxes.css';
+import surahData from '~/lib/data/surah_list.json';
+
+export default function SurahList() {
+  const data = surahData;
+  const isLoading = false;
+  const errorMessage = '';
+
+  return (
+    <>
+      {isLoading && (
+        <div className="loading-container">
+          <p style={{ textAlign: 'center', padding: '1rem' }}>Loading Surahs...</p>
+        </div>
+      )}
+
+      {errorMessage && (
+        <div className="error-container">
+          <p style={{ color: '#e74c3c', textAlign: 'center', padding: '1rem' }}>
+            <strong>⚠️ {errorMessage}</strong><br />
+            <small>Please check your local JSON file.</small>
+          </p>
+        </div>
+      )}
+
+      {data && data.length > 0 && (
+        <div className="numbered-box-container">
+          {data.map((item) => (
+            
+           
+            <div className="numbered-box" key={item.surah_no}>
+              <div className="numbered-box-number">{item.surah_no}</div>
+              <div className="numbered-box-content">
+                <div className="arabic-name">{item.surah_name_ar}</div>
+                <div className="english-name">{item.surah_name_roman}</div>
+                <div className="meaning">{item.surah_name_en}</div>
+                <div>
+                    <a href={`/surahs/surah-${String(item.surah_no).padStart(3, '0')}`}>
+                        Read More
+                    </a>
+                </div>
+              </div>
+
+            </div> 
+            
+          ))}
+        </div>
+      )}
+    </>
+  );
+}

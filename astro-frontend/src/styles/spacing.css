@@ -1,0 +1,31 @@
+/* Spacing utility classes */
+.space-xs {
+  margin-bottom: 0.25rem;
+}
+
+.space-sm {
+  margin-bottom: 0.5rem;
+}
+
+.space-md {
+  margin-bottom: 1rem;
+}
+
+.space-lg {
+  margin-bottom: 1.5rem;
+}
+
+/* Paragraph spacing */
+.p-spacing p {
+  margin-bottom: 0.75rem;
+}
+
+.p-spacing p:last-child {
+  margin-bottom: 0;
+}
+
+/* Inline spacing */
+.inline-spacing {
+  display: inline-block;
+  width: 0.5rem;
+}

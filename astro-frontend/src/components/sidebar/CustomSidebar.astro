@@ -1,0 +1,23 @@
+---
+// Import the standard Starlight components we'll reuse
+import SidebarSublist from '../../../packages/starlight/components/SidebarSublist.astro';
+import SidebarPersister from '../../../packages/starlight/components/SidebarPersister.astro';
+import MobileMenuFooter from '../../../packages/starlight/components/MobileMenuFooter.astro';
+
+// Import our custom formatter
+import { formatSidebarLabels } from './formatSidebarLabels.js';
+
+// Get the standard sidebar data from Starlight
+const { sidebar } = Astro.locals.starlightRoute;
+
+// Apply our formatting to the sidebar entries
+const formattedSidebar = formatSidebarLabels(sidebar);
+---
+
+<SidebarPersister>
+  <SidebarSublist sublist={formattedSidebar} />
+</SidebarPersister>
+
+<div class="md:sl-hidden">
+  <MobileMenuFooter />
+</div>

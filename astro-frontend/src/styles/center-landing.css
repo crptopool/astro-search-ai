@@ -1,0 +1,74 @@
+/* Custom styles to center-align the landing page content */
+
+/* Target the splash template specifically */
+[data-pagefind-body] article.splash {
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Center the main content area */
+.content {
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Center the gallery grid */
+.gallery .content-panel {
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Center the grid itself */
+.gallery .grid {
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+}
+
+/* Style the CardNew components to be centered */
+.card {
+  text-align: center;
+}
+
+/* Center headings */
+h1, h2, h3, h4, h5, h6 {
+  text-align: center !important;
+}
+
+/* Center paragraphs */
+p {
+  text-align: center;
+}
+
+/* Center the hero section */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Center all divs in the splash page */
+[data-pagefind-body] article.splash div {
+  text-align: center;
+}
+
+/* Center CardGrid components */
+.card-grid {
+  justify-content: center;
+  margin: 0 auto;
+}
+
+/* Center testimonials */
+.testimonial-grid {
+  justify-content: center;
+  margin: 0 auto;
+}
+
+/* Force center alignment for direct children of the content */
+.content > * {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}

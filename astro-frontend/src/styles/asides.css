@@ -1,0 +1,141 @@
+.starlight-aside {
+	padding: 1rem;
+	border-inline-start: 0.25rem solid;
+	color: var(--sl-color-white);
+	
+}
+.starlight-aside--note {
+	--sl-color-asides-text-accent: var(--sl-color-blue-high);
+	border-color: var(--sl-color-blue);
+	background-color: var(--sl-color-blue-low);
+	margin: 0.75rem 0 0.75rem 0;
+}
+.starlight-aside--reference {
+	--sl-color-asides-text-accent: #5D3FD3;
+	border-color: #f2f2fd;  /*	E6E6FA */
+	background-color: #f2f2fd;
+	margin: 0.75rem 0 0.75rem 0;
+}
+
+/* Add spacing after paragraphs in reference asides */
+.starlight-aside--reference p {
+	margin-bottom: 0.75rem;
+}
+
+/* Remove margin from the last paragraph to avoid extra space at the bottom */
+.starlight-aside--reference p:last-child {
+	margin-bottom: 0;
+}
+.starlight-aside--quran {
+	--sl-color-asides-text-accent: #9F312F;
+	border-color: #871838;
+	background-color: #fef8f8;
+	unicode-bidi: embed;
+	direction: rtl;
+	text-align: right;
+	font-family: 'Scheherazade New', serif;
+	font-size: 22px;
+	margin: 0.75rem 0 0.75rem 0;
+}
+
+
+.starlight-aside--tip {
+	--sl-color-asides-text-accent: #664E34;
+	border-color: #FFBD2E;
+	background-color: #fffdfa;
+	unicode-bidi: embed;
+/*	direction: rtl; edfcff ffffed
+	text-align: right;
+	font-family: 'Noto Naskh Arabic', sans-serif;
+	font-size: 24px;*/
+	margin: 0.75rem 0 0.75rem 0;
+}
+
+.starlight-aside--hadith {
+	--sl-color-asides-text-accent: #0A5C5C;
+	border-color: #15C1C1;
+	background-color: #edfcff;
+	unicode-bidi: embed;
+	direction: rtl;
+	text-align: right;
+	font-family: 'Scheherazade New', serif;
+	font-size: 24px;
+	margin: 0.75rem 0 0.75rem 0;
+}
+.starlight-aside--caution {
+	--sl-color-asides-text-accent: var(--sl-color-orange-high);
+	border-color: var(--sl-color-orange);
+	background-color: var(--sl-color-orange-low);
+	margin: 0.75rem 0 0.75rem 0;
+}
+.starlight-aside--danger {
+	--sl-color-asides-text-accent: var(--sl-color-red-high);
+	border-color: var(--sl-color-red);
+	background-color: var(--sl-color-red-low);
+	margin: 0.75rem 0 0.75rem 0;
+}
+
+.starlight-aside__title {
+	display: flex;
+	gap: 0.5rem;
+	align-items: center;
+	font-size: var(--sl-text-h5);
+	font-weight: 600;
+	line-height: var(--sl-line-height-headings);
+	color: var(--sl-color-asides-text-accent);
+
+}
+
+.starlight-aside__icon {
+	font-size: 1.333em;
+	width: 1em;
+	height: 1em;
+}
+
+.starlight-aside__title + .starlight-aside__content {
+	margin-top: 0.5rem;
+}
+
+.starlight-aside__content a {
+	color: var(--sl-color-asides-text-accent);
+}
+.arabic_text_style1 {
+	direction: rtl;
+	text-align: right;
+	font-family: 'Scheherazade New', serif;
+	color: red;
+
+  /*  background-color: #edfcff; */
+    unicode-bidi: embed;
+    font-size: 24px;
+
+  }
+.header_li_spacing {
+	border: 0px solid black;
+	display: inline-block;
+	padding: 0 25px 0 25px;
+	list-style-type: none;
+	text-align: right;
+  
+  }
+/* Center image style */
+.center-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0rem auto;
+  max-width: 100%;
+}
+
+.center-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Center PDF viewer component */
+.centered-pdf-viewer {
+  display: block;
+  width: 90%;
+  max-width: 800px;
+  margin: 2rem auto;
+}

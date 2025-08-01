@@ -1,0 +1,26 @@
+/* Override Starlight theme variables with our custom purple theme */
+:root {
+    --sl-color-accent-low: #f0e2ff;
+    --sl-color-accent: #7611a6;
+    --sl-color-accent-high: #1c0056;
+    
+    /* Adjust other Starlight theme variables as needed */
+    --sl-color-text-accent: #7611a6;
+    --sl-color-bg-accent: #f0e2ff;
+  }
+  
+  /* Dark mode overrides */
+  :root.theme-dark {
+    --sl-color-accent-low: #2a0c54;
+    --sl-color-accent: #a64adc;
+    --sl-color-accent-high: #c561f6;
+    
+    --sl-color-text-accent: #c561f6;
+    --sl-color-bg-accent: #2a0c54;
+  }
+
+.center-image {
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+}

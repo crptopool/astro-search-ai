@@ -1,0 +1,80 @@
+---
+/**
+ * SimplePDFViewer Component
+ * 
+ * A lightweight PDF viewer with page turning functionality
+ * 
+ * Props:
+ * - pdfUrl: Path to the PDF file relative to the public directory (required)
+ * - id: Custom container ID (optional, defaults to a unique ID)
+ * - height: Height of the viewer (optional, defaults to 500px)
+ * - width: Width of the viewer (optional, defaults to 100%)
+ * - backgroundColor: Background color (optional, defaults to #353535)
+ * - pageSize: How to fit the page ('auto', 'width', 'height', defaults to 'auto')
+ * - showControls: Whether to show navigation controls (optional, defaults to true)
+ * - showPageNumbers: Whether to show page numbers (optional, defaults to true)
+ * - startPage: The page to start on (optional, defaults to 0)
+ */
+
+export interface Props {
+  pdfUrl: string;
+  id?: string;
+  height?: string;
+  width?: string;
+  backgroundColor?: string;
+  pageSize?: 'auto' | 'width' | 'height';
+  showControls?: boolean;
+  showPageNumbers?: boolean;
+  startPage?: number;
+}
+
+const { 
+  pdfUrl, 
+  id = `pdf-viewer-${Math.random().toString(36).substring(2, 9)}`,
+  height = '500px',
+  width = '100%',
+  backgroundColor = '#353535',
+  pageSize = 'auto',
+  showControls = true,
+  showPageNumbers = true,
+  startPage = 0
+} = Astro.props;
+
+// Ensure the pdfUrl is prefixed correctly
+const normalizedPdfUrl = pdfUrl.startsWith('/') ? pdfUrl : `/${pdfUrl}`;
+---
+
+<div id={id} class="pdf-viewer-container" style={`height: ${height}; width: ${width};`}>
+  <!-- The PDF viewer will be initialized here -->
+</div>
+
+<script is:inline src="/js/simple-pdf-viewer.js"></script>
+<link rel="stylesheet" href="/css/simple-pdf-viewer.css">
+
+<script define:vars={{ id, normalizedPdfUrl, backgroundColor, pageSize, showControls, showPageNumbers, startPage }}>
+document.addEventListener("DOMContentLoaded", function() {
+  const container = document.getElementById(id);
+  
+  if (!container) {
+    console.error(`PDF Viewer container with ID ${id} not found`);
+    return;
+  }
+
+  const options = {
+    pdfUrl: normalizedPdfUrl,
+    pageSize: pageSize,
+    backgroundColor: backgroundColor,
+    showControls: showControls,
+    showPageNumbers: showPageNumbers,
+    startPage: startPage
+  };
+  
+  // Initialize the viewer
+  if (typeof SimplePDFViewer !== 'undefined') {
+    new SimplePDFViewer(container, options);
+  } else {
+    console.error("SimplePDFViewer library not loaded");
+    container.innerHTML = '<div style="color: #ff6b6b; text-align: center; padding: 20px;">Error: PDF viewer library not loaded</div>';
+  }
+});
+</script>
