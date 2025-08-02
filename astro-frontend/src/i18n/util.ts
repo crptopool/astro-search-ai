@@ -45,3 +45,5 @@ export function getLocaleFromPath(pathname: string): string {
   // Default to English
   return 'en';
 }
+
+// Utility to clean a string for safe use as a JSX/MDX prop value
