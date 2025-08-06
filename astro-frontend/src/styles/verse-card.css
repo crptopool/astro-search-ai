@@ -72,37 +72,41 @@
   display: inline-block;
 }
 
+.play-icon:focus {
+  outline: 2px solid #0077cc;
+  background: #eb7878;
+  border-radius: 4px; /* optional for better appearance */
+}
 
-  .left-box:last-child {
-    border-bottom: none;
+.left-box:last-child {
+  border-bottom: none;
 
-  }
-  
-  .right-column {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .right-box {
-    padding: 0.5rem 1rem;
-    border-bottom: 1px solid #ddd;
-    font-size: 22px;
-  }
-  
-  .quran-verses {
-    background-color: #fffff8;
-    direction: rtl;
-    text-align: right;
-    font-family: 'Scheherazade New', serif;
-    font-size: 24px;
-    line-height: 1.8;
-  }
-  
-  .quran-translations {
-    background-color: #fefefe;
-    font-family: serif;
-    font-size: 14px;
-    line-height: 1.6;
-  }
-  
+}
+
+.right-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.right-box {
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid #ddd;
+  font-size: 22px;
+}
+
+.quran-verses {
+  background-color: #fffff8;
+  direction: rtl;
+  text-align: right;
+  font-family: 'Scheherazade New', serif;
+  font-size: 24px;
+  line-height: 1.8;
+}
+
+.quran-translations {
+  background-color: #fefefe;
+  font-family: serif;
+  font-size: 14px;
+  line-height: 1.6;
+}

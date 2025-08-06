@@ -29,7 +29,8 @@ app.add_middleware(
         "http://localhost:3000",
         "http://localhost:4321",
         "http://127.0.0.1:3000",
-        "https://organic-space-fiesta-j4qjw5xj5593x9-3000.app.github.dev"
+        "https://astro.look4experts.com",
+                "http://astro.look4experts.com"
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -156,19 +157,24 @@ custom_retriever = CustomQdrantRetriever(
     top_k=5
 )
 
-# Create a prompt template for RAG
 prompt_template = """
-Given the following context verses, answer the question as accurately as possible.
+You are a knowledgeable assistant trained to provide accurate, respectful, and concise explanations based only on the verses of the Quran provided.
+
+Given the following context verses, answer the question as clearly and accurately as possible.
 
 Context:
 {% for document in documents %}
-Verse {{ document.meta['verse_number'] }} ({{ document.meta['heading'] }}): {{ document.content }}
+Verse {{ document.meta['verse_number'] }} ({{ document.meta['heading'] }}):
+{{ document.meta['text'] }}
+
 {% endfor %}
 
-Question: {{ query }}
+Question:
+{{ query }}
 
-Answer:
+Answer (based only on the context above):
 """
+
 
 # Create the prompt builder with required variables specified
 prompt_builder = PromptBuilder(

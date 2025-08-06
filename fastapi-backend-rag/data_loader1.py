@@ -23,7 +23,7 @@ def load_and_upload_mdx_files_to_qdrant(
     qdrant_api_key: str,
     collection_name: str,
     model_name: str = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
-    max_records: int = None  # Add this parameter
+    max_records: int = None
 ):
     mdx_dir = Path(mdx_dir_path)
     if not mdx_dir.exists():
@@ -44,20 +44,21 @@ def load_and_upload_mdx_files_to_qdrant(
     )
 
     documents = []
-    record_count = 0  # Add a counter
-    # Regex to extract verses from content
-    def extract_verses(text):
-        return re.findall(r"\*\*(\d+)\.\*\*\s*(.*?)(?=\n\*\*|\Z)", text, re.DOTALL)
+    record_count = 0
 
-#        return [block.strip() for block in re.findall(r"\*\*\d+\.\*\*.*?(?=(\n\*\*|\Z))", text, re.DOTALL)]
+    verse_pattern = re.compile(
+        r'<VerseCard\s+verseNumber=\{(\d+)\}\s+chapterNumber=\{(\d+)\}\s+arabicText=".*?"\s+translation="(.*?)"\s+transliteration=".*?"\s*/>',
+        re.DOTALL
+    )
 
     for mdx_file in mdx_dir.glob("*.mdx"):
         post = frontmatter.load(mdx_file)
         title = post.get("title", "Unknown Surah")
-        verses = extract_verses(post.content)
+        content = post.content
 
-        for i, (verse_num, clean_text) in enumerate(verses):
-            clean_text = clean_text.strip()
+        verses = verse_pattern.findall(content)
+        for i, (verse_number, chapter_number, translation) in enumerate(verses):
+            clean_text = translation.strip()
             if not clean_text:
                 continue
 
@@ -65,25 +66,27 @@ def load_and_upload_mdx_files_to_qdrant(
             lower_text = clean_text.lower()
             matched_topics = [kw for kw in TOPIC_KEYWORDS if kw in lower_text]
             topic_str = ",".join(sorted(set(matched_topics)))
-
             documents.append({
                 "id": str(uuid.uuid4()),
                 "text": clean_text,
                 "metadata": {
-                    "verse_number": verse_num,
+                    "verse_number": int(verse_number),
+                    "chapter_number": int(chapter_number),
                     "source": mdx_file.name,
                     "heading": title,
                     "section_index": i,
                     "token_count": token_count,
-                    "topics": topic_str  # Ensure topics field exists even if empty
+                    "topics": topic_str  # Reserved for future keyword tagging
                 }
             })
+
             record_count += 1
             if max_records is not None and record_count >= max_records:
                 break
+
         if max_records is not None and record_count >= max_records:
             break
-    # Upload to Qdrant
+
     for doc in documents:
         embedding = model.encode(doc["text"]).tolist()
         client.upsert(

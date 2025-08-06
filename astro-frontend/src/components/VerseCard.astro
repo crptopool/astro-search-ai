@@ -12,8 +12,18 @@ const {
   
 <div class="container">
   <div class="left-column">
-    <div class="left-box"><span class="square-icon">{verseNumber}</span></div>
-    <div class="left-box"><span class="play-icon"></span></div>
+    <div class="left-box">
+      <span class="square-icon">{verseNumber}</span>
+    </div>
+    <div class="left-box">
+      <span
+        class="play-icon test-btn"
+        role="button"
+        tabindex="0"
+        aria-label="Play verse"
+        data-verse={verseNumber}
+      ></span>
+    </div>
     <div class="left-box"><span class="share-icon"></span></div>
     <div class="left-box"><span class="star-icon"></span></div>
   </div>
@@ -24,3 +34,25 @@ const {
     <div class="right-box quran-translations">{transliteration || '— Transliteration'}</div>
   </div>
 </div>
+
+<!-- ✅ External JS logic for click/enter events -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('.test-btn');
+
+    buttons.forEach((btn) => {
+      const verseNumber = btn.getAttribute('data-verse');
+
+      const playAudio = () => {
+        alert(`Verse Number: ${verseNumber}`); // ✅ Test alert
+        const audio = new Audio(`/audio/verse-${verseNumber}.mp3`);
+        audio.play().catch(e => console.error('Audio playback failed', e));
+      };
+
+      btn.addEventListener('click', playAudio);
+      btn.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') playAudio();
+      });
+    });
+  });
+</script>

@@ -8,8 +8,10 @@ st.set_page_config(page_title="Quran MDX Uploader", layout="wide")
 st.title("📤 Quran MDX Streamlit Uploader")
 
 # Qdrant connection configuration
-QDRANT_URL = "https://6eead27a-8dd0-4a6f-8061-cada1c105bde.europe-west3-0.gcp.cloud.qdrant.io"
-QDRANT_API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3MiOiJtIn0.sdhAmXk-1tknFWteBcrN2DXWTegesOEayGQUfUb0Xmg"  # replace with your actual key
+#QDRANT_URL = "https://6eead27a-8dd0-4a6f-8061-cada1c105bde.europe-west3-0.gcp.cloud.qdrant.io"
+QDRANT_URL = "http://qdrant.look4experts.com/"
+#QDRANT_API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3MiOiJtIn0.sdhAmXk-1tknFWteBcrN2DXWTegesOEayGQUfUb0Xmg"  # replace with your actual key
+QDRANT_API_KEY = "sk_dev_51da9fe5f4b248cabf1178d38f6f8498"
 COLLECTION_NAME = "quran-mdx"
 
 # mdx_files_path="D:\ASTROJSPROJECTS\astro-directus-project\astro-quran\src\content\docs\surahs"
@@ -18,7 +20,7 @@ st.markdown("### 1️⃣ Select the folder containing your `.mdx` files")
 # mdx_dir_path = st.text_input("MDX Folder Path", value=str(Path.cwd()))
 mdx_dir_path = st.text_input(
     "MDX Folder Path",
-    value="D:\\ASTROJSPROJECTS\\astro-directus-project\\astro-quran\\src\\content\\docs\\surahs"
+    value="D:\\ASTROJSPROJECTS\\astro-search-ai\\astro-frontend\\src\\content\\docs\\surahs"
 )
 # Add checkbox for test mode
 test_mode = st.checkbox("Test mode: Only upload first 10 records (faster)")
@@ -45,14 +47,16 @@ if 'uploaded_docs' in st.session_state:
     df = pd.DataFrame([
         {
             "Verse #": doc["metadata"].get("verse_number", ""),
+            "Chapter #": doc["metadata"].get("chapter_number", ""),
             "Verse": doc["text"][:80] + "..." if len(doc["text"]) > 80 else doc["text"],
-            "Tokens": doc["metadata"]["token_count"],
-            "Topics": doc["metadata"]["topics"],
-            "Surah": doc["metadata"]["heading"],
-            "Source File": doc["metadata"]["source"]
+            "Tokens": doc["metadata"].get("token_count", ""),
+            "Topics": doc["metadata"].get("topics", ""),
+            "Surah": doc["metadata"].get("heading", ""),
+            "Source File": doc["metadata"].get("source", "")
         }
         for doc in st.session_state['uploaded_docs']
     ])
+ 
     st.dataframe(df, use_container_width=True)
 
     st.markdown("### 3️⃣ Keyword Filter")
